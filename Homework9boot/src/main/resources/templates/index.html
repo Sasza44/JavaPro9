@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://wwww.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../static/index.css" th:href="@{/index.css}" />
+    <title>Peach varieties</title>
+</head>
+<body>
+    <h1>Фото сортів персика</h1>
+    <div>
+        <a href="/upload"><button class="insert">Вивести фото кількох сортів персика</button></a>
+        <button class="delete" type="submit" form="fruit">Видалити вибрані фото</button> <!--submit відправлення даних з форми на контролер-->
+    </div>
+
+    <form id="fruit" action="/delete" method="GET"></form>
+    <table th:each="row : ${peachList}"> <!--створюємо цикл для перебирання рядків таблиці-->
+        <tr>
+            <td><input type="checkbox" form="fruit" name="checkedItems" th:value="${row.name}" /></td> <!--помітка, який пункт видалити зі списку на сторінці-->
+            <td class="name" th:text="${row.name}"></td> <!--назва сорту персика-->
+            <td><img th:src="${'data:image/jpeg;charset=utf-8;base64,' + row.convertBase64()}" alt=""></td> <!--перетворення фото з byte[] на Base64-->
+        </tr>
+    </table>
+</body>
+</html>
